@@ -38,13 +38,16 @@ for d in control_dicts:
 
 for cnt, dir in enumerate(sim_dirs):
     #print(cnt,dir)
-    dir = Path.Path(sim_dirs[cnt]+"\\"+ end_times[cnt])
-    if dir.is_dir():
-        # Getting the list of directories
-        l = os.listdir(dir)
+    try:
+        dir = Path.Path(sim_dirs[cnt] + "\\" + end_times[cnt])
+        if dir.is_dir():
+            # Getting the list of directories
+            l = os.listdir(dir)
 
-        # Checking if the list is empty or not
-        if len(l) != 0:
-            print(str(dir),  "-", colored("Done","green"))
-        else:
-            print(str(dir),  "-", colored("Not Done","RED"))
+            # Checking if the list is empty or not
+            if len(l) != 0:
+                print(str(dir), "-", colored("Done", "green"))
+            else:
+                print(str(dir), "-", colored("Not Done", "RED"))
+    except:
+        print("Couldn't open", dir)
