@@ -7,7 +7,7 @@ from termcolor import colored
 cwd = Path.Path.cwd()
 
 # List files to see what is mounted
-#cwd = r"C:\4_AnnualWindAnalysis"
+cwd = r"C:\CornellValidationSnapSimpleModel"
 
 
 control_dicts = []
