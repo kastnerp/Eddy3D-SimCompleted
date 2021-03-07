@@ -1,18 +1,38 @@
 import os
-import pathlib as Path
+from pathlib import Path
 import re
 from termcolor import colored
 import colorama
 
+
 colorama.init()
 
-cwd = Path.Path.cwd()
+cwd = Path.cwd()
 
 # List files to see what is mounted
-# cwd = r"C:\CornellValidationSnapSimpleModel"
+cwd = r"E:\CampusSmallPatch_BS5"
 
 control_dicts = []
 end_times = []
+
+
+def print_progress(cnt):
+    progress = int(last_iters[cnt]) / int(end_times[cnt]) * 100
+    if progress > 0:
+        print(str(sim_dirs[cnt]), "-", colored(str(round(progress,1)) + "% done", "cyan"))
+    else:
+        print(str(sim_dirs[cnt]), "-", colored("Not Started", "white"))
+
+
+def get_all_subdirs(path):
+    l = []
+    for root, subdirectories, files in os.walk(path):
+        for subdirectory in subdirectories:
+            l.append(subdirectory)
+
+    return l
+
+
 for root, dirs, files in os.walk(cwd):
     for file in files:
         if file.startswith("controlDict") and "mesh" not in str(root):
@@ -30,15 +50,58 @@ for root, dirs, files in os.walk(cwd):
             finally:
                 fp.close()
 
+
 sim_dirs = []
+last_iters = []
 for d in control_dicts:
     path = os.sep.join(d.split(os.sep)[0:-2])
     sim_dirs.append(path)
+    l = get_all_subdirs(path)
+    last_iter = 0
+    for el in l:
+        if el.isnumeric():
+            if int(el) > int(last_iter):
+                last_iter = el
+    last_iters.append(last_iter)
+
+def check_if_converged(dir, cnt):
+    # Check if converged
+    converged = False
+    crashed = False
+    logfile = dir / Path("log")
+    if logfile.is_file():
+        fp = open(logfile)
+        try:
+            for _, line in enumerate(fp):
+                if "SIMPLE solution converged in" in str(line):
+                    converged = True
+                    break
+                if "job aborted:" in str(line):
+                    crashed = True
+                    break
+                if "Exec   : simpleFoam":
+                    crashed = False
+                    break
+
+            if converged == True:
+                print(str(dir), "-", colored("Done", "green"))
+            elif crashed == True:
+                print(str(dir), "-", colored("Crashed", "red"))
+            else:
+
+                print_progress(cnt)
+
+        finally:
+            fp.close()
+
+    else:
+        print_progress(cnt)
+
 
 for cnt, dir in enumerate(sim_dirs):
     # print(cnt,dir)
+    wind_dir_directory = Path(sim_dirs[cnt] + "\\" + end_times[cnt])
     try:
-        wind_dir_directory = Path.Path(sim_dirs[cnt] + "\\" + end_times[cnt])
         if wind_dir_directory.is_dir():
             l = os.listdir(wind_dir_directory)
 
@@ -46,36 +109,20 @@ for cnt, dir in enumerate(sim_dirs):
             if len(l) != 0:
                 print(str(wind_dir_directory), "-", colored("Done", "green"))
             else:
-                print(str(wind_dir_directory), "-", colored("Not Done", "red"))
+                print(str(wind_dir_directory), "-", colored("Directory empty", "white"))
         else:
-            # Check if converged
-            converged = False
-            crashed = False
-            logfile = dir + "\log"
-            try:
-                fp = open(logfile)
-                for cnt, line in enumerate(fp):
-                    if "SIMPLE solution converged in" in str(line):
-                        converged = True
-                    if "job aborted:" in str(line):
-                        crashed = True
-                    if "Exec   : simpleFoam":
-                        crashed = False
-
-                if converged == True:
-                    print(str(dir), "-", colored("Done", "green"))
-                elif crashed == True:
-                    print(str(dir), "-", colored("Crashed", "red"))
-                else:
-
-                    print(str(dir), "-", colored("Not Done", "orange"))
-
-            finally:
-                fp.close()
+            check_if_converged(sim_dirs[cnt], cnt)
 
 
 
 
     except:
-        print(str(wind_dir_directory), "-", colored("Couldn't open", "yellow"))
-        # print("Couldn't open", dir)
+
+        check_if_converged(sim_dirs[cnt], cnt)
+
+
+
+
+
+
+
