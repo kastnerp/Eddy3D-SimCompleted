@@ -15,7 +15,7 @@ cwd = Path.cwd()
 def print_progress(cnt):
     progress = int(last_iters[cnt]) / int(end_times[cnt]) * 100
     if progress > 0:
-        print(str(sim_dirs[cnt]), "-", colored(str(round(progress, 1)) + "% done", "cyan"))
+        print(str(sim_dirs[cnt]), "-", colored(str(round(progress, 1)) + "% Done", "cyan"))
     else:
         print(str(sim_dirs[cnt]), "-", colored("Not Started", "white"))
 
@@ -91,8 +91,17 @@ def check_if_converged(dir, cnt):
                 elif "job aborted:" in str(line):
                     crashed = True
                     #break
-                elif "Exec   : simpleFoam":
-                    crashed = False
+                elif "simpleFoam ended prematurely and may have crashed. exit code 3" in str(line):
+                    crashed = True
+                    #break
+                elif "[0] process exited without calling finalize" in str(line):
+                    crashed = True
+                    #break
+                elif "---- error analysis -----" in str(line):
+                    crashed = True
+                    #break
+                #elif "Exec   : simpleFoam":
+                    #crashed = False
                     #break
 
             if converged == True:
