@@ -8,8 +8,9 @@ colorama.init()
 
 cwd = Path.cwd()
 
+
 # List files to see what is mounted
-#cwd = r"E:\CampusSmallPatch_BS5"
+# cwd = r"E:\CampusSmallPatch_BS5"
 
 
 def print_progress(cnt):
@@ -33,8 +34,6 @@ def get_control_dicts(cwd):
     control_dicts = []
     end_times = []
     for root, dirs, files in os.walk(cwd):
-
-
 
         for file in files:
             if file.startswith("controlDict") and "mesh" not in str(root):
@@ -73,8 +72,6 @@ def get_last_iterations(control_dicts):
     return sim_dirs, last_iters
 
 
-
-
 def check_if_converged(dir, cnt):
     # Check if converged
     converged = False
@@ -87,22 +84,22 @@ def check_if_converged(dir, cnt):
             for line in lines:
                 if "SIMPLE solution converged in" in str(line):
                     converged = True
-                    #break
+                    # break
                 elif "job aborted:" in str(line):
                     crashed = True
-                    #break
+                    # break
                 elif "simpleFoam ended prematurely and may have crashed. exit code 3" in str(line):
                     crashed = True
-                    #break
+                    # break
                 elif "[0] process exited without calling finalize" in str(line):
                     crashed = True
-                    #break
+                    # break
                 elif "---- error analysis -----" in str(line):
                     crashed = True
-                    #break
-                #elif "Exec   : simpleFoam":
-                    #crashed = False
-                    #break
+                    # break
+                # elif "Exec   : simpleFoam":
+                # crashed = False
+                # break
 
             if converged == True:
                 print(str(dir), "-", colored("Done", "green"))
@@ -119,13 +116,11 @@ def check_if_converged(dir, cnt):
         print_progress(cnt)
 
 
-
 control_dicts, end_times = get_control_dicts(cwd)
 
-sim_dirs ,  last_iters = get_last_iterations(control_dicts)
+sim_dirs, last_iters = get_last_iterations(control_dicts)
 
-
-
+number_completed = 0
 
 for cnt, dir in enumerate(sim_dirs):
     # print(cnt,dir)
@@ -137,6 +132,7 @@ for cnt, dir in enumerate(sim_dirs):
             # Checking if the directory is empty or not
             if len(l) != 0:
                 print(str(wind_dir_directory), "-", colored("Done", "green"))
+                number_completed =number_completed+1
             else:
                 print(str(wind_dir_directory), "-", colored("Directory empty", "white"))
         else:
@@ -148,3 +144,7 @@ for cnt, dir in enumerate(sim_dirs):
     except:
 
         check_if_converged(sim_dirs[cnt], cnt)
+
+string_done = str(number_completed) +" out of "+ str(len(sim_dirs)) +" simulations done or " + str( round(100*number_completed/len(sim_dirs),1))+"%"
+
+print(colored(string_done, "green"))
