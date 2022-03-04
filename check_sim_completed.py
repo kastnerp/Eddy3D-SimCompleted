@@ -69,6 +69,9 @@ class SimCompleted():
 
         for i in self.cases_not_started: print("\\".join(i.split('\\')[:-1])+"\\run.bat")
 
+        print("\n###")
+        print("\nRename cases remaining")
+        for i in self.cases_not_started: print("ren " + "\\".join(i.split('\\')[:-1])+"\\Batch_ESLTower64\_mesh_and_sim_ESLTower64.bat _mesh_and_sim_ESLTower64_next.bat")
 
 
 
