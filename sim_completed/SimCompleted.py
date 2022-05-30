@@ -23,7 +23,7 @@ class Sim_Completed:
             self.cwd = root_folder
 
         self.subdirs = []
-        self.control_dicts, self.end_times = [], []
+        self.control_dicts, self.end_iteration = [], []
         self.sim_dirs,  self.last_iters = [], []
 
         self.sim_status = SimStatus(5)
@@ -35,12 +35,12 @@ class Sim_Completed:
 
         self.cases_converged = []
 
-        self.progress = 0
+        self.current_iteration = 0
 
     def analyze(self):
 
         self.subdirs = self.get_subdirs(self.cwd)
-        self.control_dicts, self.end_times = self.get_control_dicts(self.cwd)
+        self.control_dicts, self.end_iteration = self.get_control_dicts(self.cwd)
         self.sim_dirs,  self.last_iters = self.get_last_iterations(
             self.control_dicts)
 
@@ -94,7 +94,7 @@ class Sim_Completed:
         elif self.sim_status == SimStatus.INPROGRESS:
             self.cases_inprogress.append(current_dir)
             print(str(current_dir), "-",
-                  colored(str(round(self.progress, 1)) + "% Done", "cyan"))
+                  colored(str(round(self.current_iteration, 1)) + "% Done", "cyan"))
 
         elif self.sim_status == SimStatus.NOTSTARTED:
             self.cases_not_started.append(current_dir)
@@ -171,14 +171,14 @@ class Sim_Completed:
         return sim_dirs, last_iters
 
     def check_case_progress(self, cnt):
-        progress = int(self.last_iters[cnt]) / int(self.end_times[cnt]) * 100
+        progress = int(self.last_iters[cnt]) / int(self.end_iteration[cnt]) * 100
         if progress > 0 and progress < 100:
             self.sim_status = SimStatus.INPROGRESS
-            self.progress = progress
+            self.current_iteration = progress
 
         elif progress == 100:
             self.sim_status = SimStatus.COMPLETED
-            self.progress = progress
+            self.current_iteration = progress
 
         else:
             self.sim_status = SimStatus.NOTSTARTED

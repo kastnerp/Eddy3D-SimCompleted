@@ -1,0 +1,158 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+/*   Windows 32 and 64 bit porting by blueCAPE: http://www.bluecape.com.pt   *\
+|  Based on Windows porting (2.0.x v4) by Symscape: http://www.symscape.com   |
+\*---------------------------------------------------------------------------*/
+Build  : 8-53cd1468e263
+Exec   : decomposePar -force
+Date   : May 27 2022
+Time   : 21:53:56
+Host   : "AR-256GB"
+PID    : 20064
+I/O    : uncollated
+Case   : C:/cfdgan/NeighborhoodGAN/Case_36/0
+nProcs : 1
+SigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Removing 0 existing processor directories
+
+
+Decomposing mesh region0
+
+Create mesh
+
+Calculating distribution of cells
+Selecting decompositionMethod scotch
+
+Finished decomposition in 0.422 s
+
+Calculating original mesh data
+
+Distributing cells to processors
+
+Distributing faces to processors
+
+Distributing points to processors
+
+Constructing processor meshes
+
+Processor 0
+    Number of cells = 20293
+    Number of faces shared with processor 1 = 598
+    Number of faces shared with processor 2 = 455
+    Number of faces shared with processor 3 = 117
+    Number of processor patches = 3
+    Number of processor faces = 1170
+    Number of boundary faces = 4136
+
+Processor 1
+    Number of cells = 20320
+    Number of faces shared with processor 0 = 598
+    Number of faces shared with processor 3 = 526
+    Number of processor patches = 2
+    Number of processor faces = 1124
+    Number of boundary faces = 4174
+
+Processor 2
+    Number of cells = 19955
+    Number of faces shared with processor 0 = 455
+    Number of faces shared with processor 3 = 611
+    Number of processor patches = 2
+    Number of processor faces = 1066
+    Number of boundary faces = 4110
+
+Processor 3
+    Number of cells = 19928
+    Number of faces shared with processor 0 = 117
+    Number of faces shared with processor 1 = 526
+    Number of faces shared with processor 2 = 611
+    Number of processor patches = 3
+    Number of processor faces = 1254
+    Number of boundary faces = 4072
+
+Number of processor faces = 2307
+Max number of cells = 20320 (0.97396144% above average 20124)
+Max number of processor patches = 3 (20% above average 2.5)
+Max number of faces between processors = 1254 (8.7126138% above average 1153.5)
+
+Time = 0
+
+Processor 0: field transfer
+Processor 1: field transfer
+Processor 2: field transfer
+Processor 3: field transfer
+
+End
+
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+/*   Windows 32 and 64 bit porting by blueCAPE: http://www.bluecape.com.pt   *\
+|  Based on Windows porting (2.0.x v4) by Symscape: http://www.symscape.com   |
+\*---------------------------------------------------------------------------*/
+Build  : 8-53cd1468e263
+Exec   : simpleFoam -parallel
+Date   : May 27 2022
+Time   : 21:53:58
+Host   : "AR-256GB"
+PID    : 19808
+I/O    : uncollated
+
+job aborted:
+[ranks] message
+
+[0] application aborted
+aborting  (comm=0x84000000), error 1, comm rank 0
+
+[1-7] terminated
+
+---- error analysis -----
+
+[0] on AR-256GB
+simpleFoam aborted the job. abort code 1
+
+---- error analysis -----
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+/*   Windows 32 and 64 bit porting by blueCAPE: http://www.bluecape.com.pt   *\
+|  Based on Windows porting (2.0.x v4) by Symscape: http://www.symscape.com   |
+\*---------------------------------------------------------------------------*/
+Build  : 8-53cd1468e263
+Exec   : reconstructPar -latestTime
+Date   : May 27 2022
+Time   : 21:53:59
+Host   : "AR-256GB"
+PID    : 13660
+I/O    : uncollated
+Case   : C:/cfdgan/NeighborhoodGAN/Case_36/0
+nProcs : 1
+SigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From function int main(int, char**)
+    in file reconstructPar.C at line 220
+    No times selected

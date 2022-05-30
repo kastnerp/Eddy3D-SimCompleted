@@ -1,0 +1,76 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.2                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+        version     2.0;
+        format ascii;
+        class dictionary;
+        object controlDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+libs
+(
+        "libOpenFOAM.so"
+        "libutilityFunctionObjects.so"
+        "libsolverFunctionObjects.so"
+        "libatmosphericModels.so"
+);
+            application simpleFoam;
+            startFrom latestTime;
+            startTime       1;
+            stopAt endTime;
+            endTime         2000;
+            deltaT          1;
+            writeControl timeStep;
+            writeInterval   20;
+            purgeWrite      3;
+            writeFormat binary;
+            writePrecision  8;
+            writeCompression uncompressed;
+            timeFormat general;
+            timePrecision   6;
+            runTimeModifiable true;
+            functions
+{
+#includeFunc residuals
+pressureCoefficients
+{
+                    type pressure;
+                    libs ("libfieldFunctionObjects.so");
+                    enabled true;
+                    writeControl timeStep;
+                    writeInterval 20;
+                    UInf (0 -9.076 0);     // the undistrubed velocity at building height
+                    pInf 49.4;        // the dynamic undisturbed pressure at building height
+                    pRef 49.4;        // the dynamic pressure at reference height (usually 10 m)
+                    rhoInf              1.2;
+                    calcTotal true;
+                    calcCoeff true;
+                }
+
+fieldMinMax
+{
+    type fieldMinMax;
+    libs ("libfieldFunctionObjects.so");
+    writeToFile true;
+    log true;
+    mode magnitude;
+    fields (U p k epsilon omega nut aoa);
+}
+average
+{
+    type            volFieldValue;
+    libs            ("libfieldFunctionObjects.so");
+    fields (U p);
+    operation       weightedVolAverage;
+    regionType      all;
+    writeFields     false;
+    log true;
+}
+};
