@@ -1,0 +1,210 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.3.0                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version 2.0;
+    format ascii;
+    class dictionary;
+    location system;
+    object snappyHexMeshDict;
+}
+
+    castellatedMesh true;snap 
+true;addLayers 
+true;geometry
+    {
+        building.stl
+        {
+            type triSurfaceMesh;
+            name building;
+        }
+
+        ground.stl
+        {
+            type triSurfaceMesh;
+            name ground;
+        }
+
+        ground_perim.stl
+        {
+            type triSurfaceMesh;
+            name ground_perim;
+        }
+        refinementBox{
+          type searchableBox;
+          min (-226.034 -224.727 0);
+          max (226.034 224.727 86.518);
+}
+    }
+
+    castellatedMeshControls
+    {
+        features
+        (
+            {file "building.eMesh"; levels ((0.3 4)) ;}
+            {file "ground.eMesh"; levels ((0.3 4)) ;}
+        );
+        refinementSurfaces
+        {
+            building
+            {
+                level (4 4);
+                patchInfo
+                {
+                    type wall;
+                }
+            }
+
+            ground
+            {
+                level (4 4);
+                patchInfo
+                {
+                    type wall;
+                }
+            }ground_perim
+            {
+                level (4 4);
+                patchInfo
+                {
+                    type wall;
+                }
+            }}
+refinementRegions
+        {
+refinementBox {mode inside; levels ((0 0));}
+        }
+
+        locationInMesh ( 0 -149.988 106.518 );
+
+    maxLocalCells       50000000;
+    maxGlobalCells      60000000;
+    minRefinementCells  50;
+    maxLoadUnbalance    1;
+    nCellsBetweenLevels 4;
+    resolveFeatureAngle 60;
+    allowFreeStandingZoneFaces false;
+    }
+
+snapControls
+{
+    nSmoothPatch    3;
+    tolerance       4.0;
+    nSolveIter      30;
+    nRelaxIter      5;
+
+    nFeatureSnapIter 10;
+
+    explicitFeatureSnap    true;
+    multiRegionFeatureSnap false;
+    implicitFeatureSnap    false;
+}
+
+    // Settings for the layer addition.
+    addLayersControls
+    {
+      layers
+        {
+            building
+            {
+                nSurfaceLayers 4;
+            }
+            ground
+            {
+                nSurfaceLayers 4;
+            }
+ground_perim
+            {
+                nSurfaceLayers 4;
+            }
+        }
+
+    relativeSizes   true;
+    firstLayerThickness 0.3;
+    expansionRatio  1.3;
+    minThickness    0.3;
+    nGrow           0;
+    featureAngle    150;
+    nSmoothSurfaceNormals 10;
+    nSmoothNormals  15;
+    nSmoothThickness 10;
+    maxFaceThicknessRatio 0.5;
+    minMedialAxisAngle 90;
+    maxThicknessToMedialRatio 0.3;
+    nRelaxIter      5;
+    nRelaxedIter    25;
+    nLayerIter      50;
+    nBufferCellsNoExtrude 0;
+    slipFeatureAngle 30;
+    mergePatchFacesAngle 45;
+    concaveAngle    30;
+    layerTerminationAngle 30;
+    nSmoothDisplacement 0;
+    detectExtrusionIsland true;
+    }
+
+  // Generic mesh quality settings. At any undoable phase these determine where to undo.
+  meshQualityControls
+{
+maxNonOrtho 65;
+
+maxBoundarySkewness 20;
+
+maxInternalSkewness 4;
+
+maxConcave 80;
+
+minFlatness 0.5;
+
+// Minimum cell pyramid volume; case dependent
+minVol 1e-13;
+
+// 1e-15 (small positive) to enable tracking
+// -1e+30 (large negative) for best layer insertion
+minTetQuality 1.00000E-015;
+
+// if >0 : preserve single cells with all points on the surface if the
+// resulting volume after snapping (by approximation) is larger than
+// minVolCollapseRatio times old volume (i.e. not collapsed to flat cell).
+//  If <0 : delete always.
+//minVolCollapseRatio 0.5;
+
+minArea          -1;
+
+minTwist          0.02;
+
+minDeterminant    0.001;
+
+minFaceWeight     0.05;
+
+minVolRatio       0.01;
+
+minTriangleTwist -1;
+
+nSmoothScale   4;
+
+errorReduction 0.75;
+
+relaxed
+{
+    maxNonOrtho   75;
+}
+}
+
+  // Write flags
+  writeFlags
+  (
+      scalarLevels
+      layerSets
+      layerFields     // write volScalarField for layer coverage
+  );
+
+debug 0;
+mergeTolerance 1E-6;
+
