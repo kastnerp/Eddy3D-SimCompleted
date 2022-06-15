@@ -1,6 +1,5 @@
 [![Python application](https://github.com/kastnerp/Eddy3D-SimCompleted/actions/workflows/python-app.yml/badge.svg)](https://github.com/kastnerp/Eddy3D-SimCompleted/actions/workflows/python-app.yml)
 
-
 # Installation
- 
- `pip install git+https://github.com/kastnerp/Eddy3D-SimCompleted@main`
+
+ `pip install git+https://github.com/kastnerp/pyEddy3D@main`

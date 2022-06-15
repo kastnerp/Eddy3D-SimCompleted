@@ -1,7 +1,7 @@
 import pathlib
 import unittest  # The test framework
 
-from sim_completed import SimCompleted
+from pyEddy3D import SimCompleted
 
 
 class Test_SimCompleted(unittest.TestCase):
