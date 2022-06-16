@@ -2,7 +2,8 @@ import os
 import re
 from enum import Enum
 from pathlib import Path
-
+from colorama import init
+init(autoreset = True)
 from termcolor import colored
 
 
