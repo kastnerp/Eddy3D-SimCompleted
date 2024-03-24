@@ -180,7 +180,7 @@ setup(
     # executes the function `main` from this package when invoked:
     entry_points={
         'console_scripts': [
-            'SimCompleted=pyeddy3d:SimCompleted',
+            'pyeddy3d=pyeddy3d.main:main',
         ],
     },
 

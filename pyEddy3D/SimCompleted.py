@@ -223,7 +223,7 @@ class Simulation:
                     elif "[0] process exited without calling finalize" in str(line):
                         self.sim_status = Status.CRASHED
                         # break
-                    elif "---- error analysis -----" in str(line):
+                    elif "---- error analysis ----" in str(line):
                         self.sim_status = Status.CRASHED
                         # break
                     elif "Finalising parallel run" in str(line):
