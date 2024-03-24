@@ -1,4 +1,4 @@
-from pyEddy3D import SimCompleted
+from pyeddy3d import SimCompleted
 
 s = SimCompleted.Simulation()
 s.analyze()
