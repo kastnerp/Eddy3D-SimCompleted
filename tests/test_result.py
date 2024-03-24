@@ -86,7 +86,7 @@ class Test_SimCompleted(unittest.TestCase):
         self.assertEqual(0, s.n_not_started)
         self.assertEqual(0, s.n_converged)
 
-    def test_inprogress(self):
+    def test_in_progress(self):
         folder = "6_Case_Type_Scatter_Height_20_Dist_20_dir_40_inprogress"
         path = self.fix_cwd(folder)
 
@@ -118,7 +118,7 @@ class Test_SimCompleted(unittest.TestCase):
         self.assertEqual(0, s.n_not_started)
         self.assertEqual(1, s.n_converged)
 
-    def test_notstarted(self):
+    def test_not_started(self):
         folder = "6_Case_Type_Scatter_Height_20_Dist_20_dir_40_notstarted"
         path = self.fix_cwd(folder)
 
@@ -147,7 +147,7 @@ class Test_SimCompleted(unittest.TestCase):
         self.assertEqual(1, s.n_not_started)
         self.assertEqual(1, s.n_converged)
 
-    def test_all_inprogress(self):
+    def test_all_in_progress(self):
         s = SimCompleted.Simulation()
         s.analyze()
 
@@ -158,7 +158,7 @@ class Test_SimCompleted(unittest.TestCase):
         self.assertEqual(1, s.n_inprogress)
         # self.assertEquals(s.n_converged, 1)
 
-    def test_all_notstarted(self):
+    def test_all_not_started(self):
         s = SimCompleted.Simulation()
         s.analyze()
 
@@ -176,7 +176,7 @@ class Test_SimCompleted(unittest.TestCase):
         self.printout(s)
 
         # self.assertEquals(s.n_crashed, 1)
-        self.assertEquals(2, s.n_completed)
+        self.assertEqual(2, s.n_completed)
         # self.assertEquals(s.n_not_started, 1)
         # self.assertEquals(s.n_converged, 1)
 
