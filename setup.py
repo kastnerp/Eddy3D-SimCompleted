@@ -180,7 +180,6 @@ setup(
     # executes the function `main` from this package when invoked:
     entry_points={
         'console_scripts': [
-            'pyeddy3d=pyeddy3d.cli:analyze_cwd',
             'pyeddy3d=pyeddy3d.main:main',
         ],
     },
