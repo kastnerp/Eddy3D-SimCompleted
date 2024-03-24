@@ -176,7 +176,7 @@ class Test_SimCompleted(unittest.TestCase):
         self.printout(s)
 
         # self.assertEquals(s.n_crashed, 1)
-        self.assertEquals(2, s.n_completed)
+        self.assertEqual(2, s.n_completed)
         # self.assertEquals(s.n_not_started, 1)
         # self.assertEquals(s.n_converged, 1)
 
